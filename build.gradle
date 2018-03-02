@@ -2,9 +2,9 @@
 
 buildscript {
     project.ext.targetSdkVersion = 26
-    project.ext.buildToolsVersion = '26.0.1'
+    project.ext.buildToolsVersion = '26.0.2'
     project.ext.gravitySnapHelperVersion = '1.3'
-    project.ext.supportLibVersion = '26.1.0'
+    project.ext.supportLibVersion = '26.0.2'
     project.ext.jUnitVersion = '4.12'
     project.ext.constraintLayoutVersion = '1.0.2'
 

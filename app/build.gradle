@@ -35,4 +35,10 @@ dependencies {
     implementation "com.android.support:design:${supportLibVersion}"
     implementation "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
     testImplementation "junit:junit:${jUnitVersion}"
+    // Android runner and rules support
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    // Espresso support
+    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }
