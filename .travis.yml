@@ -18,6 +18,6 @@ android:
       # White list all android-sdk-license revisions.
       - 'android-sdk-license-.+'
       # White list all the licenses.
-      # - '.+'
+      - '.+'
   script:
    ./gradlew assembleRelease
