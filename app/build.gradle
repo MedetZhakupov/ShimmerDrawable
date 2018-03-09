@@ -5,7 +5,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.medetzhakupov.shimmerdrawablesample"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
@@ -29,11 +29,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project (":shimmerdrawable")
+    implementation project(":shimmerdrawable")
     api "com.github.rubensousa:gravitysnaphelper:${gravitySnapHelperVersion}"
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:design:${supportLibVersion}"
     implementation "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation "junit:junit:${jUnitVersion}"
     // Android runner and rules support
     androidTestCompile 'com.android.support.test:runner:1.0.1'

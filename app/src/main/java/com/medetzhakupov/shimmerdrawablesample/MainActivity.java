@@ -1,12 +1,14 @@
 package com.medetzhakupov.shimmerdrawablesample;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SnapHelper;
 import android.view.Gravity;
+import android.view.View;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.medetzhakupov.shimmerdrawable.ShimmerDrawable;
@@ -27,16 +29,18 @@ public class MainActivity extends AppCompatActivity {
         binding.list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
         snapHelperStart.attachToRecyclerView(binding.list);
-        ItemAdapter<SimpleItemViewModel> adapter = new ItemAdapter<>();
-        adapter.addModel(new SimpleItemViewModel(shimmerHelper, 0, R.layout.item_list));
-        adapter.addModel(new SimpleItemViewModel(shimmerHelper, 1, R.layout.item_list));
-        adapter.addModel(new SimpleItemViewModel(shimmerHelper, 2, R.layout.item_list));
+        ItemAdapter<ItemViewModel> adapter = new ItemAdapter<>();
+        for (int i = 0; i < 3; i++) {
+            adapter.addModel(new ItemViewModel(shimmerHelper, i, R.layout.item_list));
+        }
         binding.list.setAdapter(adapter);
         binding.ivBannerOne.setBackground(bannerOne = shimmerHelper.getBannerPlaceholder());
         binding.ivBannerTwo.setBackground(bannerTwo = shimmerHelper.getBannerPlaceholder());
         binding.layoutCreditBalance.setBackground(bannerThree = shimmerHelper.getBannerPlaceholder());
         binding.layoutDataBalance.setBackground(bannerFour = shimmerHelper.getBannerPlaceholder());
-
+        binding.ivBannerOne.setOnClickListener(v -> {
+            startActivity(new Intent(this, ListActivity.class));
+        });
     }
 
     @Override

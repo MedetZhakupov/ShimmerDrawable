@@ -7,14 +7,18 @@ import android.view.View;
 
 import com.medetzhakupov.shimmerdrawable.ShimmerDrawable;
 import com.medetzhakupov.shimmerdrawablesample.databinding.ItemListBinding;
+import com.medetzhakupov.shimmerdrawablesample.databinding.SimpleItemListBinding;
 import com.medetzhakupov.shimmerdrawablesample.recyclerview.BaseItemModel;
+import com.medetzhakupov.shimmerdrawablesample.recyclerview.ItemAdapter;
 import com.medetzhakupov.shimmerdrawablesample.recyclerview.ItemHolder;
+
+import java.util.List;
 
 /**
  * Created by MEDETZ on 12/18/2017.
  */
 
-public class SimpleItemViewModel extends BaseItemModel<ItemListBinding, SimpleItemViewModel.SimpleItemViewHolder> {
+public class SimpleItemViewModel extends BaseItemModel<SimpleItemListBinding, SimpleItemViewModel.SimpleItemViewHolder> {
 
     private final int position;
     private final ShimmerHelper shimmerHelper;
@@ -35,30 +39,7 @@ public class SimpleItemViewModel extends BaseItemModel<ItemListBinding, SimpleIt
 
     @SuppressLint("NewApi")
     @Override
-    public SimpleItemViewHolder createHolder(final ItemListBinding binding) {
-        final View rootView = binding.getRoot();
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            android.view.ViewGroup.LayoutParams mParams = rootView.getLayoutParams();
-            mParams.width = rootView.getHeight();
-            rootView.setLayoutParams(mParams);
-        });
-        RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)rootView.getLayoutParams();
-
-        if (position == 1) {
-            int left = - binding.getRoot().getContext().getResources().getDimensionPixelSize(R.dimen.margin_normal);
-            params.setMargins(left, 0, 0, 0);
-            rootView.setLayoutParams(params);
-        } else {
-            params.setMargins(0, 0, 0, 0);
-        }
-
-        rootView.setLayoutParams(params);
-
-        if (position == 0) {
-            binding.frameLayout.setBackground(shimmerHelper.getTilePlaceHolder());
-        } else {
-            binding.frameLayout.setBackground(shimmerHelper.getTileRedPlaceholder());
-        }
+    public SimpleItemViewHolder createHolder(final SimpleItemListBinding binding) {
         return new SimpleItemViewHolder(binding);
     }
 
@@ -67,22 +48,35 @@ public class SimpleItemViewModel extends BaseItemModel<ItemListBinding, SimpleIt
         return position + "";
     }
 
-    static class SimpleItemViewHolder extends ItemHolder<SimpleItemViewModel, ItemListBinding> {
+    static class SimpleItemViewHolder extends ItemHolder<SimpleItemViewModel, SimpleItemListBinding> {
 
-        SimpleItemViewHolder(final ItemListBinding binding) {
+        SimpleItemViewHolder(final SimpleItemListBinding binding) {
             super(binding);
+        }
+
+        @Override
+        protected void bind(SimpleItemViewModel model) {
+            super.bind(model);
+            binding.getRoot().setBackground(model.shimmerHelper.getBannerPlaceholder());
+        }
+
+        @Override
+        protected void bind(SimpleItemViewModel model, List<Object> payloads) {
+            if (payloads.contains(ItemAdapter.ITEMS_UPDATED)) {
+                binding.getRoot().setBackground(null);
+            }
         }
 
         @Override
         protected void attached() {
             super.attached();
-            ((ShimmerDrawable)binding.frameLayout.getBackground()).start();
+            ((ShimmerDrawable) binding.getRoot().getBackground()).start();
         }
 
         @Override
         protected void detached() {
             super.detached();
-            ((ShimmerDrawable)binding.frameLayout.getBackground()).stop();
+            ((ShimmerDrawable) binding.getRoot().getBackground()).stop();
         }
     }
 
