@@ -10,12 +10,12 @@ public class ShimmerRect extends BaseShimmer {
 
     private final int height;
 
-    public ShimmerRect(int height, @ColorInt int color, @ShimmerElement.Gravity int gravity, boolean animate) {
+    public ShimmerRect(int height, @ColorInt int color, @Gravity int gravity, boolean animate) {
         super(color, gravity, animate);
         this.height = height;
     }
 
-    public ShimmerRect(int height, @ColorInt int color, @ShimmerElement.Gravity int gravity) {
+    public ShimmerRect(int height, @ColorInt int color, @Gravity int gravity) {
         super(color, gravity);
         this.height = height;
     }

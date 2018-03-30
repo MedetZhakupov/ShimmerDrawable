@@ -20,13 +20,13 @@ public abstract class BaseShimmer implements Shimmer {
     private final boolean animate;
     private final @Gravity int gravity;
 
-    public BaseShimmer(@ColorInt int color, @ShimmerElement.Gravity int gravity, boolean animate) {
+    public BaseShimmer(@ColorInt int color, @Gravity int gravity, boolean animate) {
         this.color = color;
         this.animate = animate;
         this.gravity = gravity;
     }
 
-    public BaseShimmer(@ColorInt int color, @ShimmerElement.Gravity int gravity) {
+    public BaseShimmer(@ColorInt int color, @Gravity int gravity) {
         this.color = color;
         this.animate = true;
         this.gravity = gravity;

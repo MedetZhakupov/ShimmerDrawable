@@ -24,6 +24,7 @@ import java.util.List;
 import static com.medetzhakupov.shimmerdrawable.Gravity.BOTTOM;
 import static com.medetzhakupov.shimmerdrawable.Gravity.LEFT;
 import static com.medetzhakupov.shimmerdrawable.Gravity.RIGHT;
+import static com.medetzhakupov.shimmerdrawable.Gravity.TOP;
 
 /**
  * Created by MEDETZ on 11/30/2017.
@@ -172,7 +173,7 @@ public class ShimmerDrawable extends Drawable implements Animatable, Runnable {
                 }
 
                 bottomGravityElementCount++;
-            } else if (element.getGravity() == ShimmerElement.TOP) {
+            } else if (element.getGravity() == TOP) {
                 int top = topGravityElementCount > 0
                         ? (dividerPadding * topGravityElementCount) + totalElementsHeightTop
                         : 0;

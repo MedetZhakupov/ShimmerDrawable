@@ -6,11 +6,13 @@ import android.support.v4.content.ContextCompat;
 
 import com.medetzhakupov.shimmerdrawable.Shimmer;
 import com.medetzhakupov.shimmerdrawable.ShimmerDrawable;
-import com.medetzhakupov.shimmerdrawable.ShimmerElement;
 import com.medetzhakupov.shimmerdrawable.ShimmerRect;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.medetzhakupov.shimmerdrawable.Gravity.BOTTOM;
+import static com.medetzhakupov.shimmerdrawable.Gravity.TOP;
 
 /**
  * Created by MEDETZ on 12/15/2017.
@@ -26,12 +28,12 @@ public class ShimmerHelper {
     public ShimmerDrawable getBannerPlaceholder() {
         List<Shimmer> shimmerElementList = new ArrayList<>();
         ShimmerRect s = new ShimmerRect(Util.convertDpToPixels(10, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.BOTTOM);
+                Color.parseColor("#80ffffff"), BOTTOM);
         s.setPaddingLeft(Util.convertDpToPixels(16, context));
         s.setPaddingRight(Util.convertDpToPixels(80, context));
         shimmerElementList.add(s);
 
-        s = new ShimmerRect(Util.convertDpToPixels(14, context), Color.parseColor("#80ffffff"), ShimmerElement.BOTTOM);
+        s = new ShimmerRect(Util.convertDpToPixels(14, context), Color.parseColor("#80ffffff"), BOTTOM);
         s.setPaddingLeft(Util.convertDpToPixels(16, context));
         s.setPaddingRight(Util.convertDpToPixels(30, context));
         shimmerElementList.add(s);
@@ -46,13 +48,13 @@ public class ShimmerHelper {
     public ShimmerDrawable getTilePlaceHolder() {
         List<Shimmer> shimmerElementList = new ArrayList<>();
         ShimmerRect s = new ShimmerRect(Util.convertDpToPixels(14, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.TOP);
+                Color.parseColor("#80ffffff"), TOP);
         s.setPaddingLeft(Util.convertDpToPixels(8, context));
         s.setPaddingRight(Util.convertDpToPixels(20, context));
         shimmerElementList.add(s);
 
         s = new ShimmerRect(Util.convertDpToPixels(10, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.TOP);
+                Color.parseColor("#80ffffff"), TOP);
         s.setPaddingLeft(Util.convertDpToPixels(8, context));
         s.setPaddingRight(Util.convertDpToPixels(60, context));
         shimmerElementList.add(s);
@@ -69,25 +71,25 @@ public class ShimmerHelper {
         List<Shimmer> shimmerElementList = new ArrayList<>();
 
         ShimmerRect s = new ShimmerRect(Util.convertDpToPixels(10, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.TOP);
+                Color.parseColor("#80ffffff"), TOP);
         s.setPaddingLeft(Util.convertDpToPixels(60, context));
         s.setPaddingRight(Util.convertDpToPixels(8, context));
         shimmerElementList.add(s);
 
         s = new ShimmerRect(Util.convertDpToPixels(12, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.TOP);
+                Color.parseColor("#80ffffff"), TOP);
         s.setPaddingLeft(Util.convertDpToPixels(8, context));
         s.setPaddingRight(Util.convertDpToPixels(8, context));
         shimmerElementList.add(s);
 
         s = new ShimmerRect(Util.convertDpToPixels(10, context),
-                Color.parseColor("#80ffffff"), ShimmerElement.TOP);
+                Color.parseColor("#80ffffff"), TOP);
         s.setPaddingLeft(Util.convertDpToPixels(8, context));
         s.setPaddingRight(Util.convertDpToPixels(60, context));
         shimmerElementList.add(s);
 
         s = new ShimmerRect(Util.convertDpToPixels(10, context),
-                Color.parseColor("#66d0011b"), ShimmerElement.BOTTOM);
+                Color.parseColor("#66d0011b"), BOTTOM);
         s.setPaddingLeft(Util.convertDpToPixels(60, context));
         s.setPaddingRight(Util.convertDpToPixels(8, context));
         shimmerElementList.add(s);
