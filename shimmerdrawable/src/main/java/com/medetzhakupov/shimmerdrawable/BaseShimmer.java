@@ -6,27 +6,12 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by MEDETZ on 12/7/2017.
- */
+import static android.view.Gravity.BOTTOM;
+import static android.view.Gravity.LEFT;
+import static android.view.Gravity.RIGHT;
+import static android.view.Gravity.TOP;
 
-public class ShimmerElement {
-    public static final int TOP = 0;
-    public static final int BOTTOM = 1;
-    public static final int LEFT = 2;
-    public static final int RIGHT = 3;
-
-    @IntDef ({ TOP, BOTTOM, LEFT, RIGHT })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Gravity{}
-
-    public static final int CIRCLE = 0;
-    public static final int RECTANGLE = 1;
-    @IntDef ({ CIRCLE, RECTANGLE })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Shape{}
-
-    private final int height;
+public abstract class BaseShimmer implements Shimmer {
     private int paddingLeft;
     private int paddingTop;
     private int paddingRight;
@@ -34,23 +19,17 @@ public class ShimmerElement {
     private final @ColorInt int color;
     private final boolean animate;
     private final @Gravity int gravity;
-    private final @Shape int shape;
 
-
-    public ShimmerElement(int height, @ColorInt int color, @Gravity int gravity, @Shape int shape, boolean animate) {
-        this.height = height;
+    public BaseShimmer(@ColorInt int color, @ShimmerElement.Gravity int gravity, boolean animate) {
         this.color = color;
         this.animate = animate;
         this.gravity = gravity;
-        this.shape = shape;
     }
 
-    public ShimmerElement(int height, @ColorInt int color, @Gravity int gravity, @Shape int shape) {
-        this.height = height;
+    public BaseShimmer(@ColorInt int color, @ShimmerElement.Gravity int gravity) {
         this.color = color;
         this.animate = true;
         this.gravity = gravity;
-        this.shape = shape;
     }
 
     public void setPaddingBottom(int paddingBottom) {
@@ -69,16 +48,9 @@ public class ShimmerElement {
         this.paddingTop = paddingTop;
     }
 
-    public @Gravity int getGravity() {
+    public @Gravity
+    int getGravity() {
         return gravity;
-    }
-
-    public @Shape int getShape() {
-        return shape;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public int getPaddingLeft() {
@@ -89,11 +61,21 @@ public class ShimmerElement {
         return paddingRight;
     }
 
-    public @ColorInt int getColor() {
+    public int getPaddingBottom() {
+        return paddingBottom;
+    }
+
+    public int getPaddingTop() {
+        return paddingTop;
+    }
+
+    public @ColorInt
+    int getColor() {
         return color;
     }
 
     public boolean isAnimate() {
         return animate;
     }
+
 }

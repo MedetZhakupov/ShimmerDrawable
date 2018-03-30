@@ -21,6 +21,10 @@ import android.view.animation.Interpolator;
 
 import java.util.List;
 
+import static com.medetzhakupov.shimmerdrawable.Gravity.BOTTOM;
+import static com.medetzhakupov.shimmerdrawable.Gravity.LEFT;
+import static com.medetzhakupov.shimmerdrawable.Gravity.RIGHT;
+
 /**
  * Created by MEDETZ on 11/30/2017.
  */
@@ -42,11 +46,11 @@ public class ShimmerDrawable extends Drawable implements Animatable, Runnable {
     private int paddingTop = 0;
     private int paddingBottom = 0;
     private int dividerPadding = 0;
-    private final List<ShimmerElement> shimmerElementList;
+    private final List<Shimmer> shimmerElementList;
     private final @ColorInt int[] backgroundColor;
     private final float[] colorSections;
 
-    public ShimmerDrawable(@ColorInt int[] backgroundColor, float[] colorSections, List<ShimmerElement> shimmerElementList) {
+    public ShimmerDrawable(@ColorInt int[] backgroundColor, float[] colorSections, List<Shimmer> shimmerElementList) {
         if (backgroundColor.length != colorSections.length) {
             throw new IllegalArgumentException("backgroundColor and colorSections must be a same length");
         }
@@ -142,47 +146,77 @@ public class ShimmerDrawable extends Drawable implements Animatable, Runnable {
         int totalElementsHeightBottom = 0;
         int topGravityElementCount = 0;
         int bottomGravityElementCount = 0;
+
         for (int i = 0; i < shimmerElementList.size(); i++) {
-            ShimmerElement element = shimmerElementList.get(i);
+            Shimmer element = shimmerElementList.get(i);
             backgroundPaint.setColor(element.getColor());
 
-            if (element.getGravity() == ShimmerElement.BOTTOM) {
+            if (element.getGravity() == BOTTOM) {
                 int bottom = bottomGravityElementCount > 0
                         ? bounds.height() - (totalElementsHeightBottom + (dividerPadding * bottomGravityElementCount))
                         : bounds.height();
                 bottom = (bottom == bounds.height() || totalElementsHeightBottom == 0) ? bounds.height() - paddingBottom : bottom - paddingBottom;
 
-                Rect rect = new Rect(element.getPaddingLeft(), bottom - element.getHeight(),
-                        bounds.width() - element.getPaddingRight(), bottom);
-
-                canvas.drawRect(rect, backgroundPaint);
-                if (isRunning()) {
-                    canvas.drawRect(rect, paint);
+                if (element instanceof ShimmerRect) {
+                    ShimmerRect shimmerRect = (ShimmerRect) element;
+                    drawRectShape(canvas, shimmerRect.getPaddingLeft(), bottom - shimmerRect.getHeight(),
+                            bounds.width() - shimmerRect.getPaddingRight(), bottom);
+                    totalElementsHeightBottom += shimmerRect.getHeight();
+                } else if (element instanceof ShimmerCircle) {
+                    ShimmerCircle shimmerCircle = (ShimmerCircle) element;
+                    drawCircleShape(canvas,
+                            shimmerCircle.getPaddingLeft() + shimmerCircle.getRadius(),
+                            bottom - shimmerCircle.getRadius(),
+                            shimmerCircle.getRadius());
+                    totalElementsHeightBottom += 2 * shimmerCircle.getRadius();
                 }
-                totalElementsHeightBottom += element.getHeight();
+
                 bottomGravityElementCount++;
             } else if (element.getGravity() == ShimmerElement.TOP) {
                 int top = topGravityElementCount > 0
                         ? (dividerPadding * topGravityElementCount) + totalElementsHeightTop
                         : 0;
                 top = (top == 0 || totalElementsHeightTop == 0) ? paddingTop : top + paddingTop;
-                Rect rect = new Rect(element.getPaddingLeft(),
-                        top,
-                        bounds.width() - element.getPaddingRight(),
-                        top + element.getHeight());
 
-                canvas.drawRect(rect, backgroundPaint);
-                if (isRunning()) {
-                    canvas.drawRect(rect, paint);
+                if (element instanceof ShimmerRect) {
+                    ShimmerRect shimmerRect = (ShimmerRect)element;
+                    drawRectShape(canvas, shimmerRect.getPaddingLeft(),
+                            top,
+                            bounds.width() - shimmerRect.getPaddingRight(),
+                            top + shimmerRect.getHeight());
+                    totalElementsHeightTop += shimmerRect.getHeight();
+                } else if (element instanceof ShimmerCircle) {
+                    ShimmerCircle shimmerCircle = (ShimmerCircle)element;
+                    drawCircleShape(canvas,
+                            shimmerCircle.getPaddingLeft() + shimmerCircle.getRadius(),
+                            top + shimmerCircle.getRadius(),
+                            shimmerCircle.getRadius());
+                    totalElementsHeightTop += 2 * shimmerCircle.getRadius();
                 }
-                totalElementsHeightTop += element.getHeight();
+
                 topGravityElementCount++;
-            } else {
+            }  else {
                 throw new IllegalArgumentException("ShimmerElement.Gravity values must be used only");
             }
         }
 
         canvas.restoreToCount(save);
+    }
+
+    private void drawRectShape(final Canvas canvas, int left, int top, int right, int bottom) {
+        Rect rect = new Rect(left, top, right, bottom);
+
+        canvas.drawRect(rect, backgroundPaint);
+        if (isRunning()) {
+            canvas.drawRect(rect, paint);
+        }
+    }
+
+    private void drawCircleShape(final Canvas canvas, float cx, float cy, float radius) {
+        canvas.drawCircle(cx, cy, radius, backgroundPaint);
+        if (isRunning()) {
+            canvas.drawCircle(cx, cy, radius,  paint);
+        }
     }
 
     @Override
